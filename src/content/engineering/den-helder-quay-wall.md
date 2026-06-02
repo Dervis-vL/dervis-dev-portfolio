@@ -10,4 +10,4 @@ link: "https://www.schuttevaer.nl/nieuws/actueel/2020/10/17/veel-renovatiewerkza
 
 At the Port of Den Helder, rapidly accelerating **Microbiologically Influenced Corrosion (MIC)** had degraded the quay walls to the point where the deteriorating sheet piling could no longer guarantee a safe structure.
 
-The task was to calculate and design a new **steel-and-concrete structure** to serve as a quay wall — one that also protects the steel against further MIC.
+The task was to calculate and design a new **steel-and-concrete structure** to serve as a quay wall, one that also protects the steel against further MIC.

@@ -1,10 +1,10 @@
 ---
 title: "Traffic Bridge Tool"
-summary: "Automated design software that turns a handful of inputs into a norm-compliant traffic-bridge design — turning a week of work into an hour."
+summary: "Automated design software that turns a handful of inputs into a norm-compliant traffic-bridge design. Turning a week of work into an hour."
 order: 2
 featured: true
 role: "Lead developer & architect"
-period: "Witteveen+Bos"
+period: "2023 - 2024"
 tech: ["Python", "RFEM", "Revit", "Dynamo", "GitLab", "ANT CDE"]
 ---
 
@@ -18,4 +18,4 @@ I authored the architecture and designed the complete data model. Inputs load in
 
 ## Why the approach was smart
 
-Rather than one monolithic script, each component became its own reusable Python package — usable not just by this tool but by engineers across the company. That multiplies the value of the work: the same building blocks power several tools, each documented on its own portfolio page.
+Rather than one monolithic script, each component became its own reusable Python package, usable not just by this tool but by engineers across the company. That multiplies the value of the work: the same building blocks power several tools, each documented on its own portfolio page.
