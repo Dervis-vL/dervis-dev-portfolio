@@ -1,0 +1,62 @@
+---
+// All the hidden fun, in one place. Numbered to match the README egg map.
+---
+<div id="toast"></div>
+
+<!--
+  +-----------------------------------------------+
+  |  These aren't the droids you're looking for.  |
+  |  But if you're reading the source...          |
+  |  you're exactly the dev I'd want to hire.     |
+  |  >> hint: the Konami code does something.     |
+  +-----------------------------------------------+
+-->
+
+<script is:inline>
+  (() => {
+    // (4) console greeting for fellow devs
+    console.log("%c  May the source be with you.\n  Like what you see? Let's talk.", "color:#ffe81f; font-family:monospace; font-size:13px; line-height:1.6;");
+    console.log("%c> psst... try the Konami code, and click the dot in the logo.", "color:#46c8ff; font-family:monospace;");
+
+    const toast = document.getElementById("toast");
+    let timer;
+    function showToast(msg) {
+      if (!toast) return;
+      toast.textContent = msg; toast.classList.add("show");
+      clearTimeout(timer); timer = setTimeout(() => toast.classList.remove("show"), 2600);
+    }
+
+    // (1) click the "." in the logo -> turn to the dark side
+    const toggle = document.getElementById("forceToggle");
+    if (toggle) toggle.addEventListener("click", () => {
+      window.__darkSide = !window.__darkSide;
+      document.body.classList.toggle("dark-side", window.__darkSide);
+      showToast(window.__darkSide ? "You have turned to the dark side." : "Balance restored to the Force.");
+    });
+
+    // (2) Konami code -> hyperspace jump
+    const konami = [38,38,40,40,37,39,37,39,66,65];
+    let kBuf = [];
+    addEventListener("keydown", (e) => {
+      kBuf.push(e.keyCode); kBuf = kBuf.slice(-konami.length);
+      if (kBuf.join(",") === konami.join(",")) { window.__hyperjump && window.__hyperjump(); showToast("Punch it, Chewie."); }
+    });
+
+    // (3) type "force" anywhere -> a Force pulse
+    let wordBuf = "";
+    addEventListener("keydown", (e) => {
+      if (e.key && e.key.length === 1) wordBuf = (wordBuf + e.key.toLowerCase()).slice(-5);
+      if (wordBuf === "force") {
+        document.body.classList.add("force-pulse");
+        setTimeout(() => document.body.classList.remove("force-pulse"), 800);
+        showToast("Use the Force, Dervis."); wordBuf = "";
+      }
+    });
+
+    // scroll reveal (shared util — also lives here so every page gets it)
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((en) => { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+  })();
+</script>

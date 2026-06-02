@@ -1,0 +1,29 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+  // External-link articles don't get their own page.
+  const articles = (await getCollection("articles")).filter((a) => !a.data.externalUrl);
+  return articles.map((a) => ({ params: { slug: a.id }, props: { entry: a } }));
+}
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+const fmt = (date) => date.toLocaleDateString("en-GB", { year: "numeric", month: "long", day: "numeric" });
+---
+<BaseLayout title={`${d.title} — Dervis van Leersum`} description={d.summary}>
+  <article class="post">
+    <a class="back" href="/articles">← All writing</a>
+    <time>{fmt(d.date)}</time>
+    <h1>{d.title}</h1>
+    <p class="lede">{d.summary}</p>
+    <div class="prose"><Content /></div>
+  </article>
+  <style>
+    .post { padding: 40px 0; }
+    .back { font-family: var(--font-mono); font-size: .8rem; color: var(--saber); text-decoration: none; display: inline-block; margin-bottom: 26px; }
+    .post time { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--saber); display: block; margin-bottom: 12px; }
+    .post .lede { margin: 18px 0 36px; }
+  </style>
+</BaseLayout>

@@ -1,0 +1,146 @@
+@import "tailwindcss";
+
+/* ============================================================
+   DESIGN TOKENS  —  sci-fi / hyperspace theme
+   Tweak these few values to re-skin the whole site.
+   ============================================================ */
+:root {
+  --bg:        #05060a;
+  --bg-2:      #0a0e18;
+  --panel:     rgba(18, 24, 38, 0.55);
+  --text:      #cdd3df;
+  --muted:     #7c8599;
+  --hyper:     #ffe81f;   /* hyperspace yellow */
+  --saber:     #46c8ff;   /* lightsaber blue   */
+  --ember:     #ff4d4d;   /* warning red accent */
+  --line:      rgba(255, 255, 255, 0.08);
+
+  --font-disp: "Chakra Petch", sans-serif;
+  --font-body: "IBM Plex Sans", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+
+  --max:       1080px;
+}
+
+/* dark-side easter-egg palette swap */
+body.dark-side { --hyper: #ff2d2d; --saber: #ff5555; }
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: radial-gradient(120% 80% at 50% -10%, #11182b 0%, var(--bg-2) 40%, var(--bg) 100%);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* faint scanline atmosphere */
+body::after {
+  content: ""; position: fixed; inset: 0; z-index: 1; pointer-events: none;
+  background: repeating-linear-gradient(0deg, rgba(255,255,255,0.012) 0 1px, transparent 1px 3px);
+  mix-blend-mode: overlay;
+}
+
+#stars { position: fixed; inset: 0; z-index: 0; display: block; }
+
+.wrap { position: relative; z-index: 2; max-width: var(--max); margin: 0 auto; padding: 0 28px; }
+
+a { color: inherit; }
+
+/* ---------- typography helpers ---------- */
+.kicker {
+  font-family: var(--font-mono); font-size: .78rem; letter-spacing: .32em;
+  text-transform: uppercase; color: var(--hyper);
+}
+.kicker::before { content: "// "; color: var(--muted); }
+
+.sec-label {
+  font-family: var(--font-mono); font-size: .72rem; letter-spacing: .3em;
+  text-transform: uppercase; color: var(--saber); margin-bottom: 14px;
+  display: flex; align-items: center; gap: 12px;
+}
+.sec-label::before { content: ""; width: 26px; height: 1px; background: var(--saber); box-shadow: 0 0 8px var(--saber); }
+
+h1 {
+  font-family: var(--font-disp); font-weight: 700;
+  font-size: clamp(2.4rem, 6vw, 4.6rem); line-height: 1.04;
+  color: #fff; letter-spacing: -0.01em;
+  text-shadow: 0 0 40px rgba(70,200,255,0.18);
+}
+h1 .glow { color: var(--hyper); text-shadow: 0 0 28px rgba(255,232,31,0.45); }
+
+h2 {
+  font-family: var(--font-disp); font-weight: 600; color: #fff;
+  font-size: clamp(1.7rem, 4vw, 2.4rem); letter-spacing: .01em; margin-bottom: 22px;
+}
+h3 { font-family: var(--font-disp); font-weight: 600; color: #fff; }
+
+.lede { font-size: 1.12rem; color: var(--muted); max-width: 56ch; }
+
+/* ---------- buttons ---------- */
+.btn {
+  font-family: var(--font-disp); font-size: .82rem; letter-spacing: .14em;
+  text-transform: uppercase; text-decoration: none; padding: 13px 26px;
+  border-radius: 4px; transition: all .25s; display: inline-block;
+}
+.btn-primary { background: var(--hyper); color: #0a0a0a; font-weight: 600; }
+.btn-primary:hover { box-shadow: 0 0 26px rgba(255,232,31,0.5); transform: translateY(-2px); }
+.btn-ghost { color: var(--saber); border: 1px solid rgba(70,200,255,0.4); }
+.btn-ghost:hover { border-color: var(--saber); box-shadow: 0 0 22px rgba(70,200,255,0.3); transform: translateY(-2px); }
+
+/* ---------- cards ---------- */
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 20px; }
+.card {
+  position: relative; background: var(--panel); border: 1px solid var(--line);
+  border-radius: 8px; padding: 26px 24px; overflow: hidden; text-decoration: none;
+  display: block; transition: transform .3s cubic-bezier(.4,0,.2,1), border-color .3s, box-shadow .3s;
+}
+.card::before {
+  content: ""; position: absolute; left: 0; top: 0; height: 100%; width: 3px;
+  background: var(--hyper); box-shadow: 0 0 12px var(--hyper); opacity: .55; transition: opacity .3s;
+}
+.card:hover { transform: translateY(-6px); border-color: rgba(70,200,255,0.35); box-shadow: 0 18px 40px rgba(0,0,0,0.5), 0 0 24px rgba(70,200,255,0.12); }
+.card:hover::before { opacity: 1; }
+.card h3 { font-size: 1.18rem; margin-bottom: 10px; }
+.card p { color: var(--muted); font-size: .95rem; margin-bottom: 16px; }
+
+.tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.tag {
+  font-family: var(--font-mono); font-size: .7rem; color: var(--saber);
+  border: 1px solid rgba(70,200,255,0.25); padding: 3px 9px; border-radius: 3px; letter-spacing: .04em;
+}
+
+/* ---------- prose (project / article body) ---------- */
+.prose { max-width: 70ch; }
+.prose p { color: var(--text); margin: 0 0 1.1em; }
+.prose h2 { margin: 1.6em 0 .6em; font-size: 1.5rem; }
+.prose h3 { margin: 1.4em 0 .5em; font-size: 1.2rem; color: var(--hyper); }
+.prose ul { margin: 0 0 1.1em 1.2em; color: var(--text); }
+.prose li { margin-bottom: .4em; }
+.prose a { color: var(--saber); text-decoration: underline; text-underline-offset: 3px; }
+.prose strong { color: #fff; }
+.prose code {
+  font-family: var(--font-mono); font-size: .88em; background: rgba(255,255,255,0.06);
+  padding: 2px 6px; border-radius: 4px; color: var(--hyper);
+}
+
+/* ---------- reveal on scroll ---------- */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
+.reveal.in { opacity: 1; transform: none; }
+
+/* ---------- toast (easter eggs) ---------- */
+#toast {
+  position: fixed; left: 50%; bottom: 40px; transform: translateX(-50%) translateY(20px);
+  z-index: 50; background: rgba(5,8,14,0.92); border: 1px solid var(--saber); color: #fff;
+  font-family: var(--font-mono); font-size: .85rem; letter-spacing: .05em; padding: 12px 22px;
+  border-radius: 6px; box-shadow: 0 0 28px rgba(70,200,255,0.4); opacity: 0; pointer-events: none;
+  transition: opacity .35s, transform .35s;
+}
+#toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+body.force-pulse { animation: forcePulse .8s ease; }
+@keyframes forcePulse { 50% { filter: brightness(1.25) saturate(1.3); } }

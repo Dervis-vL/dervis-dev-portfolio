@@ -1,0 +1,62 @@
+---
+// Drifting starfield + occasional hyperspace streak. Pure canvas, no deps.
+---
+<canvas id="stars"></canvas>
+
+<script is:inline>
+  (() => {
+    const c = document.getElementById("stars");
+    if (!c) return;
+    const ctx = c.getContext("2d");
+    let w, h, stars, streaks = [];
+    window.__darkSide = window.__darkSide || false;
+
+    function resize() {
+      w = c.width = innerWidth; h = c.height = innerHeight;
+      const count = Math.min(220, Math.floor((w * h) / 9000));
+      stars = Array.from({ length: count }, () => ({
+        x: Math.random() * w, y: Math.random() * h,
+        z: Math.random() * 0.8 + 0.2, r: Math.random() * 1.3 + 0.2,
+      }));
+    }
+    resize();
+    addEventListener("resize", resize);
+
+    function maybeStreak() {
+      if (Math.random() < 0.004 && streaks.length < 2) {
+        streaks.push({ x: Math.random() * w, y: Math.random() * h * 0.6, len: 0, max: 120 + Math.random() * 180, sp: 14 + Math.random() * 10 });
+      }
+    }
+
+    // exposed so the Konami egg can trigger a jump to lightspeed
+    window.__hyperjump = () => {
+      for (let i = 0; i < 40; i++) {
+        streaks.push({ x: Math.random() * w, y: Math.random() * h, len: 0, max: 200 + Math.random() * 200, sp: 18 + Math.random() * 16 });
+      }
+    };
+
+    function draw() {
+      ctx.clearRect(0, 0, w, h);
+      for (const s of stars) {
+        s.y += s.z * 0.12; if (s.y > h) s.y = 0;
+        ctx.globalAlpha = 0.35 + s.z * 0.55;
+        ctx.fillStyle = s.r > 1.1 ? "#cfe6ff" : "#ffffff";
+        ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, 6.28); ctx.fill();
+      }
+      maybeStreak();
+      for (let i = streaks.length - 1; i >= 0; i--) {
+        const k = streaks[i]; k.len += k.sp; k.x += k.sp;
+        ctx.globalAlpha = Math.max(0, 1 - k.len / k.max);
+        const sc = window.__darkSide ? ["rgba(255,60,60,0)", "rgba(255,120,120,0.95)"] : ["rgba(70,200,255,0)", "rgba(150,220,255,0.9)"];
+        const grad = ctx.createLinearGradient(k.x - k.len, k.y, k.x, k.y);
+        grad.addColorStop(0, sc[0]); grad.addColorStop(1, sc[1]);
+        ctx.strokeStyle = grad; ctx.lineWidth = 1.4;
+        ctx.beginPath(); ctx.moveTo(k.x - Math.min(k.len, 60), k.y); ctx.lineTo(k.x, k.y); ctx.stroke();
+        if (k.len > k.max) streaks.splice(i, 1);
+      }
+      ctx.globalAlpha = 1;
+      requestAnimationFrame(draw);
+    }
+    draw();
+  })();
+</script>

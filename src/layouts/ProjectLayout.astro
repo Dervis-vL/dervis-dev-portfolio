@@ -1,0 +1,58 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+
+interface Props {
+  title: string;
+  summary: string;
+  role?: string;
+  period?: string;
+  tech?: string[];
+  link?: string;
+  repo?: string;
+  backHref?: string;
+  backLabel?: string;
+}
+const { title, summary, role, period, tech = [], link, repo, backHref = "/#work", backLabel = "All work" } = Astro.props;
+---
+<BaseLayout title={`${title} — Dervis van Leersum`} description={summary}>
+  <article class="project">
+    <a class="back" href={backHref}>← {backLabel}</a>
+    <div class="sec-label">Selected Work</div>
+    <h1>{title}</h1>
+    <p class="lede">{summary}</p>
+
+    {(role || period) && (
+      <dl class="meta">
+        {role && <div><dt>Role</dt><dd>{role}</dd></div>}
+        {period && <div><dt>When</dt><dd>{period}</dd></div>}
+      </dl>
+    )}
+
+    <div class="prose"><slot /></div>
+
+    {tech.length > 0 && (
+      <div class="tech-block">
+        <div class="sec-label">Stack</div>
+        <div class="tags">{tech.map((t) => <span class="tag">{t}</span>)}</div>
+      </div>
+    )}
+
+    {(link || repo) && (
+      <div class="links">
+        {link && <a class="btn btn-primary" href={link} target="_blank" rel="noopener">View project</a>}
+        {repo && <a class="btn btn-ghost" href={repo} target="_blank" rel="noopener">Source</a>}
+      </div>
+    )}
+  </article>
+
+  <style>
+    .project { padding: 40px 0 20px; }
+    .back { font-family: var(--font-mono); font-size: .8rem; color: var(--saber); text-decoration: none; letter-spacing: .05em; display: inline-block; margin-bottom: 30px; }
+    .back:hover { text-shadow: 0 0 10px var(--saber); }
+    .meta { display: flex; gap: 40px; margin: 28px 0 36px; padding: 18px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .meta dt { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+    .meta dd { font-family: var(--font-disp); color: #fff; font-size: 1rem; }
+    .tech-block { margin: 40px 0 30px; }
+    .links { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 30px; }
+  </style>
+</BaseLayout>

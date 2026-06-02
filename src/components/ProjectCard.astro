@@ -1,0 +1,18 @@
+---
+interface Props {
+  href: string;
+  title: string;
+  summary: string;
+  tech?: string[];
+}
+const { href, title, summary, tech = [] } = Astro.props;
+---
+<a class="card reveal" href={href}>
+  <h3>{title}</h3>
+  <p>{summary}</p>
+  {tech.length > 0 && (
+    <div class="tags">
+      {tech.slice(0, 4).map((t) => <span class="tag">{t}</span>)}
+    </div>
+  )}
+</a>

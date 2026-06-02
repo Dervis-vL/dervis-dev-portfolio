@@ -1,0 +1,75 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import Terminal from "../components/Terminal.astro";
+import { getCollection } from "astro:content";
+
+const projects = (await getCollection("projects", ({ data }) => !data.draft))
+  .sort((a, b) => a.data.order - b.data.order);
+const engineering = (await getCollection("engineering", ({ data }) => !data.draft))
+  .sort((a, b) => a.data.order - b.data.order);
+---
+<BaseLayout>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="kicker">Senior Python Software Engineer · Utrecht, NL</div>
+    <h1>Building <span class="glow">data platforms</span> for the energy grid.</h1>
+    <p class="lede">I design and ship Python services that keep high-voltage forecasting reliable — FastAPI, Spark and clean architecture at the core. Treasurer of PyCon NL. Occasionally I make a justfile do something it really shouldn't.</p>
+    <div class="cta">
+      <a href="#work" class="btn btn-primary">View Work</a>
+      <a href="/contact" class="btn btn-ghost">Transmit Message</a>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section id="work">
+    <div class="sec-label">Selected Work</div>
+    <h2>Software & Platforms</h2>
+    <div class="grid">
+      {projects.map((p) => (
+        <ProjectCard href={`/work/${p.id}`} title={p.data.title} summary={p.data.summary} tech={p.data.tech} />
+      ))}
+    </div>
+  </section>
+
+  <!-- STACK -->
+  <section id="stack">
+    <div class="sec-label">Toolset</div>
+    <h2>The Stack</h2>
+    <Terminal>
+      <div><span class="prompt">$</span> <span class="out">whoami --skills</span></div>
+      <div><span class="cmt"># core</span></div>
+      <div><span class="out">Python · FastAPI · SQLAlchemy · Pydantic · Pandera</span></div>
+      <div><span class="cmt"># data</span></div>
+      <div><span class="out">Spark · Databricks · PostgreSQL · pandas</span></div>
+      <div><span class="cmt"># platform</span></div>
+      <div><span class="out">Docker · Kubernetes · ArgoCD · uv · CI/CD</span></div>
+      <div><span class="prompt">$</span> <span class="hl">_</span></div>
+    </Terminal>
+  </section>
+
+  <!-- ENGINEERING ORIGIN -->
+  <section id="engineering">
+    <div class="sec-label">Before the code</div>
+    <h2>Civil Engineering</h2>
+    <p class="lede" style="margin-bottom: 28px;">My origin story: years designing bridges, viaducts and quay walls before moving fully into software. It's where the obsession with structure and correctness started.</p>
+    <div class="grid">
+      {engineering.map((p) => (
+        <ProjectCard href={`/engineering/${p.id}`} title={p.data.title} summary={p.data.summary} tech={p.data.tech} />
+      ))}
+    </div>
+  </section>
+
+  <style>
+    .hero { min-height: 80vh; display: flex; flex-direction: column; justify-content: center; padding: 70px 0 50px; }
+    .hero h1 { max-width: 16ch; margin-top: 22px; }
+    .hero .lede { margin-top: 26px; }
+    .cta { display: flex; gap: 16px; margin-top: 40px; flex-wrap: wrap; }
+    section { padding: 70px 0; }
+    .hero .kicker { animation: fadeUp .8s ease .15s both; }
+    .hero h1 { animation: fadeUp .8s ease .35s both; }
+    .hero .lede { animation: fadeUp .8s ease .55s both; }
+    .hero .cta { animation: fadeUp .8s ease .75s both; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+  </style>
+</BaseLayout>

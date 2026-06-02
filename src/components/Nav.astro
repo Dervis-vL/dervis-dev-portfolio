@@ -1,0 +1,50 @@
+---
+const links = [
+  { href: "/#work", label: "Work" },
+  { href: "/about", label: "About" },
+  { href: "/articles", label: "Writing" },
+  { href: "/speaking", label: "Speaking" },
+  { href: "/contact", label: "Contact" },
+];
+---
+<header>
+  <div class="wrap">
+    <nav>
+      <a href="/" class="brand">DERVIS<b id="forceToggle" title="choose your side">.</b>DEV</a>
+      <ul class="nav-links">
+        {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  header {
+    position: sticky; top: 0; z-index: 20;
+    backdrop-filter: blur(10px);
+    background: linear-gradient(180deg, rgba(5,6,10,0.85), rgba(5,6,10,0.25));
+    border-bottom: 1px solid var(--line);
+  }
+  nav { display: flex; align-items: center; justify-content: space-between; height: 66px; }
+  .brand {
+    font-family: var(--font-disp); font-weight: 700; letter-spacing: .22em;
+    font-size: .95rem; text-transform: uppercase; color: #fff; text-decoration: none;
+  }
+  .brand b { color: var(--hyper); cursor: pointer; transition: text-shadow .3s; }
+  .brand b:hover { text-shadow: 0 0 14px var(--hyper); }
+  .nav-links { display: flex; gap: 30px; list-style: none; }
+  .nav-links a {
+    font-family: var(--font-disp); font-size: .78rem; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--muted); text-decoration: none;
+    position: relative; padding-bottom: 6px; transition: color .25s;
+  }
+  .nav-links a::after {
+    content: ""; position: absolute; left: 0; bottom: 0; height: 2px; width: 0;
+    background: var(--saber); border-radius: 2px;
+    box-shadow: 0 0 8px var(--saber), 0 0 16px var(--saber);
+    transition: width .28s cubic-bezier(.4,0,.2,1);
+  }
+  .nav-links a:hover { color: #fff; }
+  .nav-links a:hover::after { width: 100%; }
+  @media (max-width: 640px) { .nav-links { gap: 16px; } .nav-links li:nth-child(n+4) { display: none; } }
+</style>
