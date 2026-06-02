@@ -1,4 +1,4 @@
----
+astro---
 // All the hidden fun, in one place. Numbered to match the README egg map.
 ---
 <div id="toast"></div>
@@ -26,11 +26,24 @@
       clearTimeout(timer); timer = setTimeout(() => toast.classList.remove("show"), 2600);
     }
 
+    // Restore the chosen side on every page load so it survives navigation.
+    try {
+      if (localStorage.getItem("darkSide") === "1") {
+        window.__darkSide = true;
+        document.body.classList.add("dark-side");
+      }
+    } catch (_) { /* private mode etc. — fine to ignore */ }
+
     // (1) click the "." in the logo -> turn to the dark side
+    // The dot lives inside the <a href="/"> logo, so we must stop the click
+    // from bubbling up and navigating home (which would reload + reset this).
     const toggle = document.getElementById("forceToggle");
-    if (toggle) toggle.addEventListener("click", () => {
+    if (toggle) toggle.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
       window.__darkSide = !window.__darkSide;
       document.body.classList.toggle("dark-side", window.__darkSide);
+      try { localStorage.setItem("darkSide", window.__darkSide ? "1" : "0"); } catch (_) {}
       showToast(window.__darkSide ? "You have turned to the dark side." : "Balance restored to the Force.");
     });
 
