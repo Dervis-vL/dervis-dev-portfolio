@@ -1,4 +1,4 @@
-# dervis.dev — portfolio
+# dervis.dev - portfolio
 
 Personal portfolio for Dervis van Leersum. Built with [Astro](https://astro.build),
 hosted on [Codeberg Pages](https://codeberg.page/). Sci-fi / hyperspace theme.

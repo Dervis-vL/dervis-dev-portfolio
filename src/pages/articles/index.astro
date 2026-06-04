@@ -7,14 +7,14 @@ const articles = (await getCollection("articles", ({ data }) => !data.draft))
 
 const fmt = (d: Date) => d.toLocaleDateString("en-GB", { year: "numeric", month: "short", day: "numeric" });
 ---
-<BaseLayout title="Writing — Dervis van Leersum" description="Articles and notes on Python, data platforms and developer experience.">
+<BaseLayout title="Writing - Dervis van Leersum" description="Articles and notes on Python, data platforms and developer experience.">
   <section class="articles">
     <div class="sec-label">Transmissions</div>
     <h1>Writing</h1>
     <p class="lede" style="margin-top: 22px; margin-bottom: 40px;">Notes on Python, data platforms, tooling and the occasional war story.</p>
 
     {articles.length === 0 ? (
-      <p class="prose">No articles published yet — first transmission incoming.</p>
+      <p class="prose">No articles published yet - first transmission incoming.</p>
     ) : (
       <ul class="post-list">
         {articles.map((a) => {
