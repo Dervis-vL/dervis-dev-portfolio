@@ -1,13 +1,9 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-
-// A static site can't process forms itself. This posts to a form backend.
-// Recommended EU option: https://www.formspark.io (or Formspree / your own
-// FastAPI endpoint). Create a form, paste its endpoint URL below.
-const FORM_ENDPOINT = "https://submit-form.com/REPLACE_ME";
-const EMAIL = "dervis.vanleersum@gmail.com";
+import { MAIN_NAME, FORM_ENDPOINT, EMAIL } from "../config";
 ---
-<BaseLayout title="Contact - Dervis van Leersum" description="Get in touch with Dervis van Leersum.">
+<!-- Formspark is used for the contact form backend -->
+<BaseLayout title={`Contact - ${MAIN_NAME}`} description={`Get in touch with ${MAIN_NAME}.`}>
   <section class="contact">
     <div class="sec-label">Comms</div>
     <h1>Transmit a message</h1>
@@ -48,7 +44,11 @@ const EMAIL = "dervis.vanleersum@gmail.com";
       e.preventDefault();
       status.textContent = "Transmitting…"; status.style.color = "var(--saber)";
       try {
-        const res = await fetch(form.action, { method: "POST", body: new FormData(form), headers: { Accept: "application/json" } });
+        const res = await fetch(form.action, {
+          method: "POST",
+          body: JSON.stringify(Object.fromEntries(new FormData(form))),
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+        });
         if (res.ok) { form.reset(); status.textContent = "✓ Message received. I'll be in touch."; status.style.color = "#28c93f"; }
         else throw new Error();
       } catch {

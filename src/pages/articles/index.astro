@@ -1,13 +1,14 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
+import { MAIN_NAME } from "../../config";
 
 const articles = (await getCollection("articles", ({ data }) => !data.draft))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
 const fmt = (d: Date) => d.toLocaleDateString("en-GB", { year: "numeric", month: "short", day: "numeric" });
 ---
-<BaseLayout title="Writing - Dervis van Leersum" description="Articles and notes on Python, data platforms and developer experience.">
+<BaseLayout title={`Writing - ${MAIN_NAME}`} description={`Articles and notes on Python, data platforms and developer experience.`}>
   <section class="articles">
     <div class="sec-label">Transmissions</div>
     <h1>Writing</h1>

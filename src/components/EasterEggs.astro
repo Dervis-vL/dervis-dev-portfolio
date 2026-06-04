@@ -35,8 +35,6 @@ astro---
     } catch (_) { /* private mode etc. fine to ignore */ }
 
     // (1) click the "." in the logo -> turn to the dark side
-    // The dot lives inside the <a href="/"> logo, so we must stop the click
-    // from bubbling up and navigating home (which would reload + reset this).
     const toggle = document.getElementById("forceToggle");
     if (toggle) toggle.addEventListener("click", (e) => {
       e.preventDefault();

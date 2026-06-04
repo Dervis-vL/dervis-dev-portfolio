@@ -1,7 +1,8 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { MAIN_NAME } from "../config";
 ---
-<BaseLayout title="Speaking & Teaching - Dervis van Leersum" description="Talks, workshops, and teaching experience - from PyCon NL to hands-on Streamlit sessions.">
+<BaseLayout title={`Speaking & Teaching - ${MAIN_NAME}`} description={`Talks, workshops, and teaching experience - from PyCon NL to hands-on Streamlit sessions.`}>
   <section class="speaking">
     <h1>Speaking & Teaching</h1>
     <div class="sec-label" style="margin-top: 50px;">Community</div>

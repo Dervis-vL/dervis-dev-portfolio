@@ -142,5 +142,11 @@ h3 { font-family: var(--font-disp); font-weight: 600; color: #fff; }
 }
 #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-body.force-pulse { animation: forcePulse .8s ease; }
-@keyframes forcePulse { 50% { filter: brightness(1.25) saturate(1.3); } }
+body.force-pulse { animation: forcePulse 1s ease; }
+@keyframes forcePulse {
+  0%   { filter: brightness(1) saturate(1); }
+  25%  { filter: brightness(2) saturate(2.5) hue-rotate(20deg); }
+  50%  { filter: brightness(2.5) saturate(3) hue-rotate(-15deg); }
+  75%  { filter: brightness(1.8) saturate(2) hue-rotate(10deg); }
+  100% { filter: brightness(1) saturate(1); }
+}
