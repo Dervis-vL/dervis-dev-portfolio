@@ -1,11 +1,9 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-
-const FORM_ENDPOINT = "https://submit-form.com/8HvIE4X9K";
-const EMAIL = "dervis.vanleersum@gmail.com";
+import { MAIN_NAME, FORM_ENDPOINT, EMAIL } from "../config";
 ---
 <!-- Formspark is used for the contact form backend -->
-<BaseLayout title="Contact - Dervis van Leersum" description="Get in touch with Dervis van Leersum.">
+<BaseLayout title={`Contact - ${MAIN_NAME}`} description={`Get in touch with ${MAIN_NAME}.`}>
   <section class="contact">
     <div class="sec-label">Comms</div>
     <h1>Transmit a message</h1>

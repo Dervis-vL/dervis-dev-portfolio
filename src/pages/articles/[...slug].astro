@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { MAIN_NAME } from "../../config";
 
 export async function getStaticPaths() {
   // External-link articles don't get their own page.
@@ -12,7 +13,7 @@ const { Content } = await render(entry);
 const d = entry.data;
 const fmt = (date) => date.toLocaleDateString("en-GB", { year: "numeric", month: "long", day: "numeric" });
 ---
-<BaseLayout title={`${d.title} - Dervis van Leersum`} description={d.summary}>
+<BaseLayout title={`${d.title} - ${MAIN_NAME}`} description={d.summary}>
   <article class="post">
     <a class="back" href="/articles">← All writing</a>
     <time>{fmt(d.date)}</time>

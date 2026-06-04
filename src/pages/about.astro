@@ -1,7 +1,8 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { MAIN_NAME } from "../config";
 ---
-<BaseLayout title="About - Dervis van Leersum" description="Senior software engineer with civil-engineering roots, working on energy-grid data platforms.">
+<BaseLayout title={`About - ${MAIN_NAME}`} description={`Senior software engineer with civil-engineering roots, working on energy-grid data platforms.`}>
   <section class="about">
     <div class="sec-label">Profile</div>
     <h1>About</h1>
