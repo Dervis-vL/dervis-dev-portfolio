@@ -1,4 +1,5 @@
-import { defineCollection, z } from "astro:content";
+import { defineCollection} from "astro:content";
+import { z } from "astro/zod";
 import { glob } from "astro/loaders";
 
 /* Shared shape for any showcased piece of work. */
@@ -13,8 +14,8 @@ const workSchema = z.object({
   period: z.string().optional(),
   tech: z.array(z.string()).default([]),
   image: z.string().optional(),
-  link: z.string().url().optional(),
-  repo: z.string().url().optional(),
+  link: z.url().optional(),
+  repo: z.url().optional(),
   draft: z.boolean().default(false),
 });
 
@@ -36,7 +37,7 @@ const articles = defineCollection({
     date: z.coerce.date(),
     tags: z.array(z.string()).default([]),
     // for posts hosted elsewhere (Medium, dev.to, company blog) just set externalUrl
-    externalUrl: z.string().url().optional(),
+    externalUrl: z.url().optional(),
     draft: z.boolean().default(false),
   }),
 });
