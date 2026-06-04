@@ -83,9 +83,10 @@ whole site follows.
 
 ## Contact form
 
-`src/pages/contact.astro` posts to a form backend. Create a form at an EU
-provider such as [Formspark](https://www.formspark.io) and paste its
-endpoint into `FORM_ENDPOINT`. Until then the form shows a friendly notice.
+`src/pages/contact.astro` posts to [Formspark](https://www.formspark.io) (Dutch, EU-based).
+The endpoint is already configured in `FORM_ENDPOINT`. Submissions are emailed to the
+address set up in the Formspark dashboard. To swap the form, create a new form there
+and replace the endpoint URL in `contact.astro`.
 
 ## Easter eggs 🥚
 
