@@ -1,6 +1,6 @@
 ---
 title: "Pizza Platform"
-summary: "A pizza-discovery platform - scraper, API and map app — that lets you find world-class pizzerias near you, built on a modern Python monorepo."
+summary: "A pizza-discovery platform - scraper, API and map app - that lets you find world-class pizzerias near you, built on a modern Python monorepo."
 order: 1
 featured: true
 role: "Designer, architect & sole developer"
@@ -38,7 +38,7 @@ scraper → parser → PostgreSQL (source of truth)
 
 - **Private-by-network API.** The API has only one consumer, the frontend. So rather than bolt on API keys, the API runs privately and only the Streamlit app is public. The network *is* the security boundary.
 - **Serverless and cheap.** Deployed on Scaleway (an EU provider) as two serverless containers that scale to zero when idle, with a managed PostgreSQL behind them. Images are built multi-arch and pushed to a registry.
-- **Room to grow.** The architecture leaves space for an Elasticsearch read-layer to power fuzzy, typo-tolerant and geo-radius search — sitting alongside Postgres rather than replacing it.
+- **Room to grow.** The architecture leaves space for an Elasticsearch read-layer to power fuzzy, typo-tolerant and geo-radius search - sitting alongside Postgres rather than replacing it.
 
 ## Why it matters
 
