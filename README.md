@@ -22,8 +22,8 @@ src/
 ├── components/        # Starfield, Nav, Footer, ProjectCard, Terminal, EasterEggs
 ├── layouts/           # BaseLayout (shell) + ProjectLayout (work/eng detail)
 ├── content/
-│   ├── projects/      # software work — one .md per project
-│   ├── engineering/   # civil-engineering work — one .md per item
+│   ├── projects/      # software work - one .md per project
+│   ├── engineering/   # civil-engineering work - one .md per item
 │   └── articles/      # blog posts (or external links via `externalUrl`)
 ├── pages/
 │   ├── index.astro    # home (hero, work grid, stack, engineering)
@@ -34,12 +34,12 @@ src/
 │   ├── engineering/[...slug].astro   # generated from content/engineering
 │   └── articles/{index,[...slug]}.astro
 ├── content.config.ts  # collection schemas
-└── styles/global.css  # all design tokens live here — re-skin from one file
+└── styles/global.css  # all design tokens live here - re-skin from one file
 ```
 
 ## Adding things
 
-**A new project** — create `src/content/projects/my-thing.md`:
+**A new project**: create `src/content/projects/my-thing.md`:
 
 ```md
 ---
@@ -54,11 +54,11 @@ repo: "https://..."  # optional source link
 Markdown body becomes the project page.
 ```
 
-**A new article** — create `src/content/articles/my-post.md` with `title`,
+**A new article**: create `src/content/articles/my-post.md` with `title`,
 `summary`, `date`, `tags`. For a post hosted elsewhere, add
 `externalUrl: "https://..."` and the list links straight out.
 
-**Engineering work** — same as projects, in `src/content/engineering/`.
+**Engineering work**: same as projects, in `src/content/engineering/`.
 
 ## Re-skinning
 
@@ -89,10 +89,10 @@ endpoint into `FORM_ENDPOINT`. Until then the form shows a friendly notice.
 
 ## Easter eggs 🥚
 
-1. **Logo dot** — click the `.` in `DERVIS.DEV` → turn to the dark side (red theme).
-2. **Konami code** — ↑↑↓↓←→←→ B A → hyperspace jump.
+1. **Logo dot** - click the `.` in `DERVIS.DEV` → turn to the dark side (red theme).
+2. **Konami code** - ↑↑↓↓←→←→ B A → hyperspace jump.
 3. **Type "force"** anywhere → a Force pulse.
-4. **Console** — open DevTools for a styled greeting + hints.
-5. **View source** — a hidden comment for fellow nerds (see `EasterEggs.astro`).
+4. **Console** - open DevTools for a styled greeting + hints.
+5. **View source** - a hidden comment for fellow nerds (see `EasterEggs.astro`).
 
 May the source be with you.

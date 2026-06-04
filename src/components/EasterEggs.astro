@@ -32,7 +32,7 @@ astro---
         window.__darkSide = true;
         document.body.classList.add("dark-side");
       }
-    } catch (_) { /* private mode etc. — fine to ignore */ }
+    } catch (_) { /* private mode etc. fine to ignore */ }
 
     // (1) click the "." in the logo -> turn to the dark side
     // The dot lives inside the <a href="/"> logo, so we must stop the click
@@ -48,10 +48,10 @@ astro---
     });
 
     // (2) Konami code -> hyperspace jump
-    const konami = [38,38,40,40,37,39,37,39,66,65];
+    const konami = ["ArrowUp","ArrowUp","ArrowDown","ArrowDown","ArrowLeft","ArrowRight","ArrowLeft","ArrowRight","b","a"];
     let kBuf = [];
     addEventListener("keydown", (e) => {
-      kBuf.push(e.keyCode); kBuf = kBuf.slice(-konami.length);
+      kBuf.push(e.key); kBuf = kBuf.slice(-konami.length);
       if (kBuf.join(",") === konami.join(",")) { window.__hyperjump && window.__hyperjump(); showToast("Punch it, Chewie."); }
     });
 
@@ -66,7 +66,7 @@ astro---
       }
     });
 
-    // scroll reveal (shared util — also lives here so every page gets it)
+    // scroll reveal (shared util also lives here so every page gets it)
     const io = new IntersectionObserver((entries) => {
       entries.forEach((en) => { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } });
     }, { threshold: 0.12 });

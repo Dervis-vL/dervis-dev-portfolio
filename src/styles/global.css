@@ -136,7 +136,7 @@ h3 { font-family: var(--font-disp); font-weight: 600; color: #fff; }
 #toast {
   position: fixed; left: 50%; bottom: 40px; transform: translateX(-50%) translateY(20px);
   z-index: 50; background: rgba(5,8,14,0.92); border: 1px solid var(--saber); color: #fff;
-  font-family: var(--font-mono); font-size: .85rem; letter-spacing: .05em; padding: 12px 22px;
+  font-family: var(--font-mono); font-size: 1.25rem; letter-spacing: .06em; padding: 18px 32px;
   border-radius: 6px; box-shadow: 0 0 28px rgba(70,200,255,0.4); opacity: 0; pointer-events: none;
   transition: opacity .35s, transform .35s;
 }
