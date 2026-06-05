@@ -1,5 +1,6 @@
 astro---
 // All the hidden fun, in one place. Numbered to match the README egg map.
+import { SABER_GREEN, SABER_RED } from '../config';
 ---
 <div id="toast"></div>
 
@@ -12,7 +13,7 @@ astro---
   +-----------------------------------------------+
 -->
 
-<script is:inline>
+<script is:inline define:vars={{ SABER_GREEN, SABER_RED }}>
   (() => {
     // (4) console greeting for fellow devs
     console.log("%c  May the source be with you.\n  Like what you see? Let's talk.", "color:#ffe81f; font-family:monospace; font-size:13px; line-height:1.6;");
@@ -53,7 +54,86 @@ astro---
       if (kBuf.join(",") === konami.join(",")) { window.__hyperjump && window.__hyperjump(); showToast("Punch it, Chewie."); }
     });
 
-    // (3) type "force" anywhere -> a Force pulse
+    // ── (3a) Lightsaber cursor – toggled by typing "force" ──────────────
+    let saberOn = false, saberEl = null;
+    let saberX = -1000, saberY = -1000, saberAngle = 0, saberDir = 1;
+    let saberHx = 0, saberHy = 0;
+    let cSpeed = 0, saberRaf = null, saberT0 = 0, flipTimer = null;
+    let pmx = 0, pmy = 0, pmt = performance.now(), prevDark = false;
+
+    function saberCfg() { return window.__darkSide ? SABER_RED : SABER_GREEN; }
+
+    function applySaberImg() {
+      if (!saberEl) return;
+      const { src, w, hx, hy } = saberCfg();
+      const img = saberEl.querySelector('img');
+      img.src = src;
+      img.style.cssText = `display:block;width:${w}px;user-select:none;-webkit-user-drag:none`;
+      saberEl.style.transformOrigin = `${hx}px ${hy}px`;
+      saberHx = hx; saberHy = hy;
+    }
+
+    function buildSaberEl() {
+      if (saberEl) return;
+      saberEl = document.createElement('div');
+      saberEl.style.cssText = 'position:fixed;left:0;top:0;pointer-events:none;z-index:9999;will-change:transform;';
+      saberEl.appendChild(document.createElement('img'));
+      document.body.appendChild(saberEl);
+      applySaberImg();
+    }
+
+    function scheduleSaberFlip() {
+      clearTimeout(flipTimer);
+      flipTimer = setTimeout(() => {
+        if (!saberOn) return;
+        saberDir = Math.random() < 0.5 ? 1 : -1;
+        scheduleSaberFlip();
+      }, 500 + Math.random() * 2500);
+    }
+
+    function saberLoop(now) {
+      if (!saberOn) return;
+      const dt = Math.min(now - saberT0, 50);
+      saberT0 = now;
+      cSpeed *= Math.pow(0.82, dt / 16.67);
+      saberAngle += saberDir * cSpeed * 0.9 * dt;
+      const isDark = !!window.__darkSide;
+      if (isDark !== prevDark) { prevDark = isDark; applySaberImg(); }
+      saberEl.style.transform = `translate(${saberX - saberHx}px,${saberY - saberHy}px) rotate(${saberAngle}deg)`;
+      saberRaf = requestAnimationFrame(saberLoop);
+    }
+
+    function activateSaber() {
+      saberOn = true;
+      buildSaberEl();
+      document.body.classList.add('saber-active');
+      saberDir = Math.random() < 0.5 ? 1 : -1;
+      scheduleSaberFlip();
+      saberT0 = performance.now();
+      saberRaf = requestAnimationFrame(saberLoop);
+      try { localStorage.setItem("saberOn", "1"); } catch (_) {}
+    }
+
+    function deactivateSaber() {
+      saberOn = false;
+      document.body.classList.remove('saber-active');
+      clearTimeout(flipTimer);
+      if (saberRaf) { cancelAnimationFrame(saberRaf); saberRaf = null; }
+      if (saberEl) { saberEl.remove(); saberEl = null; }
+      try { localStorage.setItem("saberOn", "0"); } catch (_) {}
+    }
+
+    try { if (localStorage.getItem("saberOn") === "1") activateSaber(); } catch (_) {}
+
+    addEventListener('mousemove', e => {
+      const now = performance.now(), dt = now - pmt;
+      if (dt > 0) cSpeed = Math.hypot(e.clientX - pmx, e.clientY - pmy) / dt;
+      pmx = e.clientX; pmy = e.clientY; pmt = now;
+      saberX = e.clientX; saberY = e.clientY;
+    });
+    // ── end Lightsaber cursor ────────────────────────────────────────────
+
+    // (3) type "force" anywhere -> Force pulse + toggle lightsaber cursor
     let wordBuf = "";
     addEventListener("keydown", (e) => {
       if (e.key && e.key.length === 1) wordBuf = (wordBuf + e.key.toLowerCase()).slice(-5);
@@ -61,6 +141,7 @@ astro---
         document.body.classList.add("force-pulse");
         setTimeout(() => document.body.classList.remove("force-pulse"), 800);
         showToast("Use the Force, Dervis."); wordBuf = "";
+        if (saberOn) deactivateSaber(); else activateSaber();
       }
     });
 
