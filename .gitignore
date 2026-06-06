@@ -13,6 +13,7 @@ npm-debug.log*
 .env.production
 .forgejo
 .vscode
+*.code-workspace
 
 # macOS
 .DS_Store
