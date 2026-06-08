@@ -17,7 +17,255 @@ import { MAIN_NAME } from "../config";
       <p>The fastest way to reach me is the <a href="/contact">contact page</a>, or find me on <a href="https://www.linkedin.com/in/dervis-van-leersum" target="_blank" rel="noopener">LinkedIn</a>.</p>
     </div>
   </section>
+
+  <!-- (5) Jedi crawl Easter egg — type "jedi" on this page -->
+  <div id="jc" aria-hidden="true">
+
+    <!-- Phase 1: "A long time ago..." -->
+    <p id="jc-pre">A long time ago in a city far,<br>far away....</p>
+
+    <!-- Phase 2: DERVIS.DEV logo zooms away -->
+    <div id="jc-logo">DERVIS<span>.</span>DEV</div>
+
+    <!-- Phase 3: perspective text crawl -->
+    <div id="jc-fade"></div>
+    <div id="jc-scene">
+      <div id="jc-text">
+        <p class="jc-ep">Episode&nbsp;I</p>
+        <p class="jc-title">The Engineer's<br>Dilemma</p>
+
+        <p>It is a period of structural uncertainty. The European energy grid trembles under the weight of unoptimised data pipelines and a monorepo on the edge of collapse.</p>
+
+        <p>Rising from the blueprints of bridges and viaducts, senior engineer Dervis van Leersum has emerged as an unlikely champion of clean architecture — stationed in the city of Utrecht, deep inside the data platforms of a high-voltage transmission system operator.</p>
+
+        <p>Armed with typed Python and an unwavering belief in well-drawn boundaries, Dervis wages a quiet war against complexity: forecasting pipelines, Databricks and Spark jobs, and the developer tooling that keeps a sizeable monorepo from collapsing under its own weight.</p>
+
+        <p>But the path was not always clear. In another life, Dervis designed bridges and viaducts — structures built to endure for generations. It was deep among finite-element models and endless spreadsheets that he discovered his true calling: making the calculations run themselves.</p>
+
+        <p>The structural engineer's respect for correctness, load paths, and things that must not fail now lives in every repository pattern, every dependency injection boundary, every green CI run on the first push.</p>
+
+        <p>As Treasurer of PyCon NL and PyNederland, Dervis serves as guardian of the Dutch Python community — organising events and workshops, passing the wisdom of the craft to a new generation of engineers.</p>
+
+        <p>When not battling entropy in the monorepo, he can be found mastering the ancient arts of Turkish cuisine, conquering distant mountain slopes on a snowboard, or engineering his home with tools forged in Europe.</p>
+
+        <p>There is one last hope for those who seek him. The fastest path leads through the contact page — if you dare reach out....</p>
+      </div>
+    </div>
+
+    <button id="jc-close" aria-label="Close">✕ esc</button>
+  </div>
+
   <style>
     .about { padding: 40px 0; }
+
+    /* ── overlay ─────────────────────────────────────────────── */
+    #jc {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 9100;
+      overflow: hidden;
+    }
+    #jc.jc-on { display: block; }
+
+    /* ── Phase 1: preamble ───────────────────────────────────── */
+    #jc-pre {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #4fc3f7;
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      letter-spacing: 0.12em;
+      text-align: center;
+      line-height: 2;
+      white-space: nowrap;
+      z-index: 5;
+      pointer-events: none;
+    }
+    #jc-pre.jc-show {
+      display: block;
+      animation: jc-pre-anim 4.5s ease-in-out forwards;
+    }
+    @keyframes jc-pre-anim {
+      0%   { opacity: 0; }
+      18%  { opacity: 1; }
+      75%  { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    /* ── Phase 2: DERVIS.DEV logo zooms away ─────────────────── */
+    #jc-logo {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      color: #feda4a;
+      font-family: 'Chakra Petch', sans-serif;
+      font-weight: 700;
+      font-size: clamp(4rem, 9vw, 8rem);
+      letter-spacing: 0.22em;
+      white-space: nowrap;
+      z-index: 5;
+      pointer-events: none;
+    }
+    #jc-logo span { color: #feda4a; }
+    #jc-logo.jc-show {
+      display: block;
+      animation: jc-logo-anim 5.5s ease-in forwards;
+    }
+    @keyframes jc-logo-anim {
+      /* starts big enough to fill the screen, shrinks to a point */
+      0%   { opacity: 1; transform: translate(-50%, -50%) scale(2.5); }
+      88%  { opacity: 1; transform: translate(-50%, -50%) scale(0.02); }
+      100% { opacity: 0; transform: translate(-50%, -50%) scale(0.01); }
+    }
+
+    /* ── Gradient: text fades into space at the top ──────────── */
+    #jc-fade {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 40%;
+      background: linear-gradient(to bottom, #000 25%, transparent 100%);
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    /* ── Phase 3: perspective scene ──────────────────────────── */
+    #jc-scene {
+      position: absolute;
+      inset: 0;
+      perspective: 300px;
+      overflow: hidden;
+    }
+
+    #jc-text {
+      display: none;
+      position: absolute;
+      top: 100%;
+      width: 70%;
+      left: 15%;
+      color: #feda4a;
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: clamp(5rem, 7vw, 9rem);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      line-height: 1.75;
+      text-align: justify;
+      text-transform: uppercase;
+      transform-origin: 50% 100%;
+    }
+    #jc-text.jc-crawl {
+      display: block;
+      animation: jc-crawl 90s linear forwards;
+    }
+    @keyframes jc-crawl {
+      0%   { top: 100%; transform: rotateX(25deg); }
+      100% { top: -9000px; transform: rotateX(25deg); }
+    }
+
+    #jc-text p { margin-bottom: 1.5em; }
+    #jc-text p:last-child { padding-bottom: 6em; }
+
+    .jc-ep {
+      text-align: center;
+      letter-spacing: 0.35em;
+      font-size: 0.8em;
+      margin-bottom: 0.4em;
+    }
+    .jc-title {
+      text-align: center;
+      font-size: 1.5em;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      line-height: 1.25;
+      margin-bottom: 3.5em;
+    }
+
+    /* ── close button ────────────────────────────────────────── */
+    #jc-close {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.5rem;
+      z-index: 10;
+      background: transparent;
+      border: 1px solid rgba(254, 218, 74, 0.35);
+      color: rgba(254, 218, 74, 0.5);
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      padding: 0.35em 0.8em;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    #jc-close:hover { color: #feda4a; border-color: #feda4a; }
   </style>
+
+  <script>
+    (() => {
+      const overlay  = document.getElementById("jc") as HTMLElement | null;
+      const pre      = document.getElementById("jc-pre") as HTMLElement | null;
+      const logo     = document.getElementById("jc-logo") as HTMLElement | null;
+      const text     = document.getElementById("jc-text") as HTMLElement | null;
+
+      let timers: ReturnType<typeof setTimeout>[] = [];
+
+      function reset() {
+        timers.forEach(clearTimeout);
+        timers = [];
+        pre?.classList.remove("jc-show");
+        logo?.classList.remove("jc-show");
+        text?.classList.remove("jc-crawl");
+      }
+
+      function openCrawl() {
+        if (!overlay || !text) return;
+        reset();
+
+        overlay.classList.add("jc-on");
+        overlay.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+
+        // Phase 1 — preamble (0 → 4.5 s)
+        pre?.classList.add("jc-show");
+
+        // Phase 2 — logo (4.5 → 10 s)
+        timers.push(setTimeout(() => {
+          pre?.classList.remove("jc-show");
+          logo?.classList.add("jc-show");
+        }, 4500));
+
+        // Phase 3 — crawl (10 s → ~100 s)
+        timers.push(setTimeout(() => {
+          logo?.classList.remove("jc-show");
+          text.classList.add("jc-crawl");
+          text.addEventListener("animationend", () => {
+            setTimeout(closeCrawl, 800);
+          }, { once: true });
+        }, 10000));
+      }
+
+      function closeCrawl() {
+        if (!overlay) return;
+        reset();
+        overlay.classList.remove("jc-on");
+        overlay.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+      }
+
+      // type "jedi" anywhere on this page
+      let buf = "";
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") { closeCrawl(); return; }
+        if (e.key && e.key.length === 1) buf = (buf + e.key.toLowerCase()).slice(-4);
+        if (buf === "jedi") { buf = ""; openCrawl(); }
+      });
+
+      document.getElementById("jc-close")?.addEventListener("click", closeCrawl);
+    })();
+  </script>
 </BaseLayout>

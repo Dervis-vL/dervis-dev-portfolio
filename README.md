@@ -78,8 +78,6 @@ whole site follows.
    `CNAME` (or `ALIAS`/`ANAME` for the apex) at `<user>.codeberg.page`.
    HTTPS via Let's Encrypt is automatic.
 
-> No CI? You can also just build locally and push `dist/` to the `pages`
-> branch by hand. The Actions route is simply the hands-off version.
 
 ## Contact form
 
@@ -92,8 +90,9 @@ and replace the endpoint URL in `contact.astro`.
 
 1. **Logo dot** - click the `.` in `DERVIS.DEV` → turn to the dark side (red theme).
 2. **Konami code** - ↑↑↓↓←→←→ B A → hyperspace jump.
-3. **Type "force"** anywhere → a Force pulse.
-4. **Console** - open DevTools for a styled greeting + hints.
-5. **View source** - a hidden comment for fellow nerds (see `EasterEggs.astro`).
+3. **Type "force"** anywhere → some saber action.
+4. **Type "jedi"** in the 'about' page → A intro crawl anum
+5. **Console** - open DevTools for a styled greeting + hints.
+6. **View source** - a hidden comment for fellow nerds (see `EasterEggs.astro`).
 
 May the source be with you.
